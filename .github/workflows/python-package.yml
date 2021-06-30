@@ -1,10 +1,8 @@
-name: CI build
+name: Scrape  # The name of your Workflow
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
+on: [push, pull_request]
+  # schedule:  # Tells Github to run this Workflow every night
+  #   - cron: "23 8 * * *"
 
 jobs:
   build:
@@ -56,21 +54,6 @@ jobs:
       run: |
         echo "def test_2(): pass" > nothing2.py
         nosetests nothing2.py
-    - name: Run pytest verify_framework.py --browser=chrome --headless
-      run: |
-        pytest examples/unit_tests/verify_framework.py --browser=chrome --headless -v -s --junit-xml=junit/test-results.xml
-    - name: Run pytest boilerplate_test.py --browser=chrome --headless
-      run: |
-        pytest examples/boilerplates/boilerplate_test.py --browser=chrome --headless -v -s --junit-xml=junit/test-results.xml
-    - name: Run pytest test_demo_site.py --browser=chrome --headless
-      run: |
-        pytest examples/test_demo_site.py --browser=chrome --headless -v -s --junit-xml=junit/test-results.xml
-    - name: Run pytest my_first_test.py --browser=chrome --headless
-      run: |
-        pytest examples/my_first_test.py --browser=chrome --headless -v -s --junit-xml=junit/test-results.xml
-    - name: Run pytest test_inspect_html.py --browser=chrome --headless
-      run: |
-        pytest examples/test_inspect_html.py --browser=chrome --headless -v -s --junit-xml=junit/test-results.xml
-    - name: Run pytest my_first_test.py --browser=firefox --headless
-      run: |
-        pytest examples/my_first_test.py --browser=firefox --headless -v -s --junit-xml=junit/test-results.xml
+        # Tells Github to run the file `scraper.py` from your repository
+    - name: Run Scraper
+      run: python script_BolCom.py scrape
